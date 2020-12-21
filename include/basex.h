@@ -4,6 +4,7 @@
 
 #include <basex/base32.h>
 #include <basex/base64.h>
+#include <basex/base64url.h>
 
 
 #endif /*_BASEX_H*/

@@ -80,6 +80,14 @@ base32_test(void)
 
 
 static void
+base32hex_test(void)
+{
+    basex_test(base32hex_encode, base32hex_decode);
+    printf("Base32hex test passed.\n");
+}
+
+
+static void
 base64_test(void)
 {
     basex_test(base64_encode, base64_decode);
@@ -98,6 +106,8 @@ base64url_test(void)
 int main(int argc, char **argv)
 {
     base32_test();
+    base32hex_test();
+
     base64_test();
     base64url_test();
 

@@ -11,7 +11,7 @@ base64_encode(const unsigned char *src, int len, int pad)
     unsigned int bits, buff;
     int rem, i;
 
-    if (src == NULL || len == 0)
+    if (src == NULL)
         return NULL;
 
     out = calloc((len + 7), sizeof(char));
@@ -79,7 +79,7 @@ base64_decode(const unsigned char *src, int len)
     unsigned int bits, buff;
     int i;
 
-    if (src == NULL || len == 0)
+    if (src == NULL)
         return NULL;
 
     out = calloc((len + 7), sizeof(char));

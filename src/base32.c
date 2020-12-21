@@ -28,16 +28,18 @@ static const char decoding_table[256] = {
 char *
 base32_encode(const unsigned char *src, int len, int pad)
 {
+    char *out, *ptr;
+    unsigned int bits, buff;
+    int rem, i;
+
     if (src == NULL || len == 0)
         return NULL;
 
-    char *out = calloc((len + 7), sizeof(char));
-    char *ptr = out;
+    out = calloc((len + 7), sizeof(char));
+    ptr = out;
 
-    unsigned int bits = 0;
-    unsigned int buff = 0;
-
-    int i = 0;
+    bits = 0;
+    buff = 0;
     for (i = 0; i < len; ++i) {
         buff <<= 8;
         buff += (unsigned int)(*src++);
@@ -49,7 +51,7 @@ base32_encode(const unsigned char *src, int len, int pad)
         }
     }
 
-    unsigned int rem = len % 5;
+    rem = len % 5;
 
     if (rem == 1) {
         buff <<= 2;
@@ -90,16 +92,18 @@ base32_encode(const unsigned char *src, int len, int pad)
 unsigned char *
 base32_decode(const unsigned char *src, int len)
 {
+    unsigned char *out, *ptr;
+    unsigned int bits, buff;
+    int i;
+
     if (src == NULL || len == 0)
         return NULL;
 
-    char *out = calloc((len + 7), sizeof(char));
-    char *ptr = out;
+    out = calloc((len + 7), sizeof(char));
+    ptr = out;
 
-    unsigned int bits = 0;
-    unsigned int buff = 0;
-
-    int i = 0;
+    bits = 0;
+    buff = 0;
     for (i = 0; i < len; ++i) {
         const unsigned char c = *src++;
         const int group = decoding_table[c];

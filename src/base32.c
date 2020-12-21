@@ -2,32 +2,11 @@
 #include <malloc.h>
 
 
-static const char encoding_table[32] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
-
-
-static const char decoding_table[256] = {
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, 26, 27, 28, 29, 30, 31, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
-   15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-   -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
-};
-
-
 char *
 base32_encode(const unsigned char *src, int len, int pad)
 {
+    const char encoding_table[32] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+
     char *out, *ptr;
     unsigned int bits, buff;
     int rem, i;
@@ -45,7 +24,7 @@ base32_encode(const unsigned char *src, int len, int pad)
         buff += (unsigned int)(*src++);
         bits += 8;
         while (bits >= 5) {
-            sprintf(ptr++, "%c", encoding_table[(buff >> (bits - 5)) & 0x3f]);
+            *ptr++ = encoding_table[(buff >> (bits - 5)) & 0x3f];
             buff &= ~(0x1f << (bits - 5));
             bits -= 5;
         }
@@ -55,7 +34,7 @@ base32_encode(const unsigned char *src, int len, int pad)
 
     if (rem == 1) {
         buff <<= 2;
-        sprintf(ptr++, "%c", encoding_table[buff & 0x1f]);
+        *ptr++ = encoding_table[buff & 0x1f];
         if (pad) {
             sprintf(ptr, "%s", "======");
             ptr += 6;
@@ -63,7 +42,7 @@ base32_encode(const unsigned char *src, int len, int pad)
 
     } else if (rem == 2) {
         buff <<= 4;
-        sprintf(ptr++, "%c", encoding_table[buff & 0x1f]);
+        *ptr++ = encoding_table[buff & 0x1f];
         if (pad) {
             sprintf(ptr, "%s", "====");
             ptr += 4;
@@ -71,7 +50,7 @@ base32_encode(const unsigned char *src, int len, int pad)
 
     } else if (rem == 3) {
         buff <<= 1;
-        sprintf(ptr++, "%c", encoding_table[buff & 0x1f]);
+        *ptr++ = encoding_table[buff & 0x1f];
         if (pad) {
             sprintf(ptr, "%s", "===");
             ptr += 3;
@@ -79,9 +58,9 @@ base32_encode(const unsigned char *src, int len, int pad)
 
     } else if (rem == 4) {
         buff <<= 3;
-        sprintf(ptr++, "%c", encoding_table[buff & 0x1f]);
+        *ptr++ = encoding_table[buff & 0x1f];
         if (pad)
-            sprintf(ptr++, "%c", '=');
+            *ptr++ = '=';
     }
 
     *ptr = 0;
@@ -92,6 +71,25 @@ base32_encode(const unsigned char *src, int len, int pad)
 unsigned char *
 base32_decode(const unsigned char *src, int len)
 {
+    const char decoding_table[256] = {
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, 26, 27, 28, 29, 30, 31, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+        15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+        -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+    };
+
     unsigned char *out, *ptr;
     unsigned int bits, buff;
     int i;
@@ -110,10 +108,9 @@ base32_decode(const unsigned char *src, int len)
 
         buff <<= 5;
         bits += 5;
-        if (group != -1) {
-            printf("%d  ", group);
+
+        if (group != -1)
             buff += group;
-        }
 
         if (bits >= 8) {
             if (c != '=')

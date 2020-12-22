@@ -1,3 +1,12 @@
+/*
+ * Copyright 2020 @bynect
+ *
+ * This program is free and open source software.
+ * You can use/modify/redistribute it under the terms of the MIT license.
+ * See etc/LICENSE for for more details.
+ */
+
+
 #include <basex.h>
 #include <stdio.h>
 #include <malloc.h>
@@ -120,6 +129,4 @@ int main(int argc, char **argv)
 
     base64_test();
     base64url_test();
-
-    printf("All test passed.\n");
 }

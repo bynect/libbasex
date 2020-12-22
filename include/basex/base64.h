@@ -2,10 +2,9 @@
 #define _BASE64_H
 
 
-#include <stdint.h>
 #include <stddef.h>
 #include <string.h>
-
+#include <malloc.h>
 
 char *base64_encode(const unsigned char *src, int len, int pad);
 

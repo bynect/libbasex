@@ -1,5 +1,4 @@
 #include <basex/base16.h>
-#include <malloc.h>
 
 
 char *

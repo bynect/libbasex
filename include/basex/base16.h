@@ -2,9 +2,9 @@
 #define _BASE16_H
 
 
-#include <stdint.h>
 #include <stddef.h>
 #include <string.h>
+#include <malloc.h>
 
 
 char *base16_encode(const unsigned char *src, int len, int pad);

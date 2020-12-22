@@ -1,5 +1,13 @@
+/*
+ * Copyright 2020 @bynect
+ *
+ * This program is free and open source software.
+ * You can use/modify/redistribute it under the terms of the MIT license.
+ * See etc/LICENSE for for more details.
+ */
+
+
 #include <basex/base64.h>
-#include <malloc.h>
 
 
 char *
@@ -87,6 +95,7 @@ base64url_decode(const unsigned char *src, int len)
 
     bits = 0;
     buff = 0;
+
     for (i = 0; i < len; ++i) {
         const unsigned char c = *src++;
         const int group = decoding_table[c];

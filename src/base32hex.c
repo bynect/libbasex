@@ -1,5 +1,13 @@
+/*
+ * Copyright 2020 @bynect
+ *
+ * This program is free and open source software.
+ * You can use/modify/redistribute it under the terms of the MIT license.
+ * See etc/LICENSE for for more details.
+ */
+
+
 #include <basex/base32.h>
-#include <malloc.h>
 
 
 char *
@@ -19,6 +27,7 @@ base32hex_encode(const unsigned char *src, int len, int pad)
 
     bits = 0;
     buff = 0;
+
     for (i = 0; i < len; ++i) {
         buff <<= 8;
         buff += (unsigned int)(*src++);

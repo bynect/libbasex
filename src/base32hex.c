@@ -121,5 +121,6 @@ base32hex_decode(const unsigned char *src, int len)
         }
     }
 
+    *ptr = 0;
     return out;
 }

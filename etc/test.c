@@ -72,6 +72,14 @@ static char *src6 = "foobar";
 
 
 static void
+base16_test(void)
+{
+    basex_test(base16_encode, base16_decode);
+    printf("Base16 test passed.\n");
+}
+
+
+static void
 base32_test(void)
 {
     basex_test(base32_encode, base32_decode);
@@ -105,6 +113,8 @@ base64url_test(void)
 
 int main(int argc, char **argv)
 {
+    base16_test();
+
     base32_test();
     base32hex_test();
 

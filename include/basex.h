@@ -1,6 +1,7 @@
 #ifndef _BASEX_H
 #define _BASEX_H
 
+#include <basex/base16.h>
 
 #include <basex/base32.h>
 #include <basex/base32hex.h>

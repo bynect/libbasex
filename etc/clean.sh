@@ -12,5 +12,9 @@ objdir=${objdir:-"$libdir/obj"}
 static=${static:-"$libdir/libbasex.a"}
 shared=${shared:-"$libdir/libbasex.so"}
 
+testfile=${testfile:-"./etc/basex_test"}
+
+#remove libs and objects
 rm -f $objdir/*.o
 rm -f $static $shared
+rm -f $testfile

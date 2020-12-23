@@ -4,7 +4,6 @@
 # You can use/modify/redistribute it under the terms of the MIT license.
 # See etc/LICENSE for for more details.
 
-testdir=${testdir:-"./test"}
 libdir=${libdir:-"./lib"}
 incdir=${incdir:-"./include"}
 
@@ -18,10 +17,12 @@ cc=gcc
 cflags="-g -ansi -L$libdir -I$incdir"
 
 #compile tests
-$cc $testdir/*.c -o $testdir/basex_test $cflags $static
+testfile=${testfile:-"./etc/basex_test"}
+
+$cc "$testfile.c" -o "$testfile" $cflags $static
 
 #run tests
-if ./$testdir/basex_test; then
+if ./"$testfile"; then
     echo "All tests passed. Exiting."
 else
     echo "A test failed. Aborting."

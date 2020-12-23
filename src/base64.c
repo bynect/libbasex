@@ -22,7 +22,7 @@ base64_encode(const unsigned char *src, int len, int pad)
     if (src == NULL)
         return NULL;
 
-    out = calloc((len + 7), sizeof(char));
+    out = calloc(len + 4, sizeof(char));
     ptr = out;
     
     bits = 0;
@@ -56,7 +56,6 @@ base64_encode(const unsigned char *src, int len, int pad)
             *ptr++ = '=';
     }
 
-    *ptr = 0;
     return out;
 }
 
@@ -90,7 +89,7 @@ base64_decode(const unsigned char *src, int len)
     if (src == NULL)
         return NULL;
 
-    out = calloc((len + 7), sizeof(char));
+    out = calloc(len + 1, sizeof(unsigned char));
     ptr = out;
 
     bits = 0;
@@ -108,13 +107,12 @@ base64_decode(const unsigned char *src, int len)
 
         if (bits >= 8) {
             if (c != '=')
-                *ptr++ = (char)(buff >> (bits - 8));
+                *ptr++ = (buff >> (bits - 8));
 
             buff &= ~(0xff << (bits - 8));
             bits -= 8;
         }
     }
 
-    *ptr = 0;
     return out;
 }

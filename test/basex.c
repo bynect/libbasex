@@ -120,7 +120,8 @@ base64url_test(void)
 }
 
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
     base16_test();
 

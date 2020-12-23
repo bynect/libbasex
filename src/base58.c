@@ -55,7 +55,6 @@ base58_encode(const unsigned char *src, int len)
         *ptr++ = encoding_table[buff[j]];
     }
 
-    *ptr = 0;
     return out;
 }
 

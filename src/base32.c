@@ -22,7 +22,7 @@ base32_encode(const unsigned char *src, int len, int pad)
     if (src == NULL)
         return NULL;
 
-    out = calloc((len + 7), sizeof(char));
+    out = calloc(len + 7, sizeof(char));
     ptr = out;
 
     bits = 0;
@@ -72,7 +72,6 @@ base32_encode(const unsigned char *src, int len, int pad)
             *ptr++ = '=';
     }
 
-    *ptr = 0;
     return out;
 }
 
@@ -106,7 +105,7 @@ base32_decode(const unsigned char *src, int len)
     if (src == NULL)
         return NULL;
 
-    out = calloc((len + 7), sizeof(char));
+    out = calloc(len + 1, sizeof(unsigned char));
     ptr = out;
 
     bits = 0;
@@ -130,6 +129,5 @@ base32_decode(const unsigned char *src, int len)
         }
     }
 
-    *ptr = 0;
     return out;
 }

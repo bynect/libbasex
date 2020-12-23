@@ -17,7 +17,7 @@ shared=${shared:-"$libdir/libbasex.so"}
 ./${libsh:-"./etc/lib.sh"}
 
 cc=gcc
-cflags="-ansi -L$libdir -I$incdir"
+cflags="-g -ansi -L$libdir -I$incdir"
 
 #compile tests
 $cc $testdir/*.c -o $testdir/basex_test $cflags $static

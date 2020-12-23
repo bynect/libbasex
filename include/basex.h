@@ -10,13 +10,24 @@
 #ifndef _BASEX_H
 #define _BASEX_H
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
 #include <basex/base16.h>
 
 #include <basex/base32.h>
 #include <basex/base32hex.h>
 
+#include <basex/base58.h>
+
 #include <basex/base64.h>
 #include <basex/base64url.h>
 
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif /*_BASEX_H*/

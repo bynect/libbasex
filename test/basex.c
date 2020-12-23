@@ -130,4 +130,6 @@ main(int argc, char **argv)
 
     base64_test();
     base64url_test();
+
+    return 0;
 }

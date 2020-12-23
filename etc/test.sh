@@ -4,8 +4,6 @@
 # You can use/modify/redistribute it under the terms of the MIT license.
 # See etc/LICENSE for for more details.
 
-set -e
-
 testdir=${testdir:-"./test"}
 libdir=${libdir:-"./lib"}
 incdir=${incdir:-"./include"}
@@ -23,9 +21,8 @@ cflags="-g -ansi -L$libdir -I$incdir"
 $cc $testdir/*.c -o $testdir/basex_test $cflags $static
 
 #run tests
-if $testdir/basex_test; then
-    echo "A test failed. Aborting."
-    exit 1
-else
+if ./$testdir/basex_test; then
     echo "All tests passed. Exiting."
+else
+    echo "A test failed. Aborting."
 fi

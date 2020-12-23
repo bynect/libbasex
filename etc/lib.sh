@@ -15,7 +15,7 @@ static=${static:-"$libdir/libbasex.a"}
 shared=${shared:-"$libdir/libbasex.so"}
 
 cc=gcc
-cflags="-ansi -I$incdir"
+cflags="-ansi -Wall -I$incdir"
 
 if test ! -d "$libdir"; then
     mkdir -p "$libdir"

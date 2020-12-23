@@ -68,6 +68,10 @@ base16_decode(const unsigned char *src, int len)
     for (i = 0; i < len; ++i) {
         const unsigned char b1 = decoding_table[*src++];
         const unsigned char b2 = decoding_table[*src++];
+
+        if (b1 == -1 || b2 == -1)
+            return NULL;
+
         *ptr++ = (b1 << 4) | b2;
     }
 

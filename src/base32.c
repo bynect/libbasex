@@ -114,6 +114,9 @@ base32_decode(const unsigned char *src, int len)
         const unsigned char c = *src++;
         const int group = decoding_table[c];
 
+        if (c == -1)
+            return NULL;
+
         buff <<= 5;
         bits += 5;
 

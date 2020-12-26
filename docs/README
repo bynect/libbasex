@@ -1,0 +1,14 @@
+The basex library offers various base encoding and decoding functions.
+
+For now are supported the following encodings:
+    * base16
+    * base32
+    * base32hex
+    * base64
+    * base64url
+    * base58
+
+Copyright 2020 @bynect
+
+This library is licensed under the the MIT license.
+See docs/LICENSE for for more details.

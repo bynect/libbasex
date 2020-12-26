@@ -1,9 +1,9 @@
 /*
  * Copyright 2020 @bynect
  *
- * This program is free and open source software.
+ * This is free and open source software.
  * You can use/modify/redistribute it under the terms of the MIT license.
- * See etc/LICENSE for for more details.
+ * See docs/LICENSE for for more details.
  */
 
 

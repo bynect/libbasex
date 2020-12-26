@@ -22,68 +22,68 @@ static char *src5 = "fooba";
 static char *src6 = "foobar";
 
 
-#define basex_test(encode, decode)          \
-    char *enc0;                             \
-    char *enc1;                             \
-    char *enc2;                             \
-    char *enc3;                             \
-    char *enc4;                             \
-    char *enc5;                             \
-    char *enc6;                             \
-                                            \
-    unsigned char *dec0;                    \
-    unsigned char *dec1;                    \
-    unsigned char *dec2;                    \
-    unsigned char *dec3;                    \
-    unsigned char *dec4;                    \
-    unsigned char *dec5;                    \
-    unsigned char *dec6;                    \
-                                            \
-    enc0 = encode(src0, strlen(src0), 1);   \
-    enc1 = encode(src1, strlen(src1), 1);   \
-    enc2 = encode(src2, strlen(src2), 1);   \
-    enc3 = encode(src3, strlen(src3), 1);   \
-    enc4 = encode(src4, strlen(src4), 1);   \
-    enc5 = encode(src5, strlen(src5), 1);   \
-    enc6 = encode(src6, strlen(src6), 1);   \
-                                            \
-    dec0 = decode(enc0, strlen(enc0));      \
-    dec1 = decode(enc1, strlen(enc1));      \
-    dec2 = decode(enc2, strlen(enc2));      \
-    dec3 = decode(enc3, strlen(enc3));      \
-    dec4 = decode(enc4, strlen(enc4));      \
-    dec5 = decode(enc5, strlen(enc5));      \
-    dec6 = decode(enc6, strlen(enc6));      \
-                                            \
-    assert(!strcmp(src0, dec0));            \
-    assert(!strcmp(src1, dec1));            \
-    assert(!strcmp(src2, dec2));            \
-    assert(!strcmp(src3, dec3));            \
-    assert(!strcmp(src4, dec4));            \
-    assert(!strcmp(src5, dec5));            \
-    assert(!strcmp(src6, dec6));            \
-                                            \
-    free(enc0);                             \
-    free(enc1);                             \
-    free(enc2);                             \
-    free(enc3);                             \
-    free(enc4);                             \
-    free(enc5);                             \
-    free(enc6);                             \
-                                            \
-    free(dec0);                             \
-    free(dec1);                             \
-    free(dec2);                             \
-    free(dec3);                             \
-    free(dec4);                             \
-    free(dec5);                             \
-    free(dec6);
+#define basex_test(x)                                                   \
+    char *enc0_ ## x;                                                   \
+    char *enc1_ ## x;                                                   \
+    char *enc2_ ## x;                                                   \
+    char *enc3_ ## x;                                                   \
+    char *enc4_ ## x;                                                   \
+    char *enc5_ ## x;                                                   \
+    char *enc6_ ## x;                                                   \
+                                                                        \
+    unsigned char *dec0_ ## x;                                          \
+    unsigned char *dec1_ ## x;                                          \
+    unsigned char *dec2_ ## x;                                          \
+    unsigned char *dec3_ ## x;                                          \
+    unsigned char *dec4_ ## x;                                          \
+    unsigned char *dec5_ ## x;                                          \
+    unsigned char *dec6_ ## x;                                          \
+                                                                        \
+    enc0_ ## x = base ## x ## _encode(src0, strlen(src0), 1);           \
+    enc1_ ## x = base ## x ## _encode(src1, strlen(src1), 1);           \
+    enc2_ ## x = base ## x ## _encode(src2, strlen(src2), 1);           \
+    enc3_ ## x = base ## x ## _encode(src3, strlen(src3), 1);           \
+    enc4_ ## x = base ## x ## _encode(src4, strlen(src4), 1);           \
+    enc5_ ## x = base ## x ## _encode(src5, strlen(src5), 1);           \
+    enc6_ ## x = base ## x ## _encode(src6, strlen(src6), 1);           \
+                                                                        \
+    dec0_ ## x = base ## x ## _decode(enc0_ ## x, strlen(enc0_ ## x));  \
+    dec1_ ## x = base ## x ## _decode(enc1_ ## x, strlen(enc1_ ## x));  \
+    dec2_ ## x = base ## x ## _decode(enc2_ ## x, strlen(enc2_ ## x));  \
+    dec3_ ## x = base ## x ## _decode(enc3_ ## x, strlen(enc3_ ## x));  \
+    dec4_ ## x = base ## x ## _decode(enc4_ ## x, strlen(enc4_ ## x));  \
+    dec5_ ## x = base ## x ## _decode(enc5_ ## x, strlen(enc5_ ## x));  \
+    dec6_ ## x = base ## x ## _decode(enc6_ ## x, strlen(enc6_ ## x));  \
+                                                                        \
+    assert(!strcmp(src0, dec0_ ## x));                                  \
+    assert(!strcmp(src1, dec1_ ## x));                                  \
+    assert(!strcmp(src2, dec2_ ## x));                                  \
+    assert(!strcmp(src3, dec3_ ## x));                                  \
+    assert(!strcmp(src4, dec4_ ## x));                                  \
+    assert(!strcmp(src5, dec5_ ## x));                                  \
+    assert(!strcmp(src6, dec6_ ## x));                                  \
+                                                                        \
+    free(enc0_ ## x);                                                   \
+    free(enc1_ ## x);                                                   \
+    free(enc2_ ## x);                                                   \
+    free(enc3_ ## x);                                                   \
+    free(enc4_ ## x);                                                   \
+    free(enc5_ ## x);                                                   \
+    free(enc6_ ## x);                                                   \
+                                                                        \
+    free(dec0_ ## x);                                                   \
+    free(dec1_ ## x);                                                   \
+    free(dec2_ ## x);                                                   \
+    free(dec3_ ## x);                                                   \
+    free(dec4_ ## x);                                                   \
+    free(dec5_ ## x);                                                   \
+    free(dec6_ ## x);
 
 
 static void
 base16_test(void)
 {
-    basex_test(base16_encode, base16_decode);
+    basex_test(16);
     printf("Base16 test passed.\n");
 }
 
@@ -91,7 +91,7 @@ base16_test(void)
 static void
 base32_test(void)
 {
-    basex_test(base32_encode, base32_decode);
+    basex_test(32);
     printf("Base32 test passed.\n");
 }
 
@@ -99,7 +99,7 @@ base32_test(void)
 static void
 base32hex_test(void)
 {
-    basex_test(base32hex_encode, base32hex_decode);
+    basex_test(32hex);
     printf("Base32hex test passed.\n");
 }
 
@@ -107,7 +107,7 @@ base32hex_test(void)
 static void
 base64_test(void)
 {
-    basex_test(base64_encode, base64_decode);
+    basex_test(64);
     printf("Base64 test passed.\n");
 }
 
@@ -115,7 +115,7 @@ base64_test(void)
 static void
 base64url_test(void)
 {
-    basex_test(base64url_encode, base64url_decode);
+    basex_test(64url);
     printf("Base64url test passed.\n");
 }
 

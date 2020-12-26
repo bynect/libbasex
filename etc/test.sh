@@ -11,7 +11,7 @@ static=${static:-"$libdir/libbasex.a"}
 shared=${shared:-"$libdir/libbasex.so"}
 
 #compile library
-./${libsh:-"./docs/Lib.sh"}
+./${libsh:-"./etc/lib.sh"}
 
 cc=gcc
 cflags="-g -ansi -L$libdir -I$incdir"

@@ -22,7 +22,7 @@ base32hex_encode(const unsigned char *src, int len, int pad)
     if (src == NULL)
         return NULL;
 
-    out = calloc(((len * 8 + 4) / 5) + 7, sizeof(char));
+    out = malloc((((len * 8 + 4) / 5) + 7) * sizeof(char));
     ptr = out;
 
     bits = 0;
@@ -72,6 +72,7 @@ base32hex_encode(const unsigned char *src, int len, int pad)
             *ptr++ = '=';
     }
 
+    *ptr = 0;
     return out;
 }
 
@@ -105,7 +106,7 @@ base32hex_decode(const unsigned char *src, int len)
     if (src == NULL)
         return NULL;
 
-    out = calloc((len / 1.6) + 1, sizeof(unsigned char));
+    out = malloc(((len / 1.6) + 1) * sizeof(unsigned char));
     ptr = out;
 
     bits = 0;
@@ -132,5 +133,6 @@ base32hex_decode(const unsigned char *src, int len)
         }
     }
 
+    *ptr = 0;
     return out;
 }

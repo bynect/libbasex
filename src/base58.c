@@ -16,20 +16,19 @@ base58_encode(const unsigned char *src, int len)
     const char encoding_table[58] = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
     char *out, *ptr;
-    unsigned char *buff;
-    unsigned int zero, size, high;
+    unsigned int size, high, zero = 0;
     int i, j, carry;
+
 
     if (src == NULL)
         return NULL;
 
-    zero = 0;
-    size = (len - zero) * 138 / 100;
-    buff = calloc(size + 1, sizeof(unsigned char));
-
     while (zero < len && *(src + zero) == 0) {
         ++zero;
     }
+
+    size = (len - zero) * 138 / 100;
+    unsigned char buff[size + 1];
 
     for (i = zero, high = size; i < len; ++i, high = j) {
         for (carry = *(src + i), j = size; (j > high) || carry; --j) {
@@ -43,7 +42,7 @@ base58_encode(const unsigned char *src, int len)
 
     for (j = 0; j < (size + 1) && !buff[j]; ++j);
         
-    out = calloc(zero + size - j + 1, sizeof(char));
+    out = malloc((zero + size - j + 1) * sizeof(char));
     ptr = out;
 
     if (zero) {
@@ -55,7 +54,7 @@ base58_encode(const unsigned char *src, int len)
         *ptr++ = encoding_table[buff[j]];
     }
 
-    free(buff);
+    *ptr = 0;
     return out;
 }
 

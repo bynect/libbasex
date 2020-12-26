@@ -21,7 +21,7 @@ base16_encode(const unsigned char *src, int len, int pad)
     if (src == NULL)
         return NULL;
 
-    out = calloc((len * 2) + 1, sizeof(char));
+    out = malloc(((len * 2) + 1) * sizeof(char));
     ptr = out;
 
     for (i = 0; i < len; ++i) {
@@ -30,6 +30,7 @@ base16_encode(const unsigned char *src, int len, int pad)
         *ptr++ = encoding_table[c & 0x0f];
     }
 
+    *ptr = 0;
     return out;
 }
 
@@ -62,7 +63,7 @@ base16_decode(const unsigned char *src, int len)
     if (src == NULL)
         return NULL;
 
-    out = calloc((len /= 2) + 1, sizeof(unsigned char));
+    out = malloc(((len /= 2) + 1) * sizeof(unsigned char));
     ptr = out;
 
     for (i = 0; i < len; ++i) {
@@ -75,5 +76,6 @@ base16_decode(const unsigned char *src, int len)
         *ptr++ = (b1 << 4) | b2;
     }
 
+    *ptr = 0;
     return out;
 }

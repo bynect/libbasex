@@ -22,7 +22,7 @@ base64url_encode(const unsigned char *src, int len, int pad)
     if (src == NULL)
         return NULL;
 
-    out = calloc((pad ? ((len + 3 - 1) / 3) * 4 : (len * 4 + 3 - 1) / 3) + 1, sizeof(char));
+    out = malloc(((pad ? ((len + 3 - 1) / 3) * 4 : (len * 4 + 3 - 1) / 3) + 1) * sizeof(char));
     ptr = out;
 
     bits = 0;
@@ -56,6 +56,7 @@ base64url_encode(const unsigned char *src, int len, int pad)
             *ptr++ = '=';
     }
 
+    *ptr = 0;
     return out;
 }
 
@@ -89,7 +90,7 @@ base64url_decode(const unsigned char *src, int len)
     if (src == NULL)
         return NULL;
 
-    out = calloc(((len / 4) * 3) + 1, sizeof(unsigned char));
+    out = malloc(((len / 4 * 3) + 1) * sizeof(unsigned char));
     ptr = out;
 
     bits = 0;
@@ -117,5 +118,6 @@ base64url_decode(const unsigned char *src, int len)
         }
     }
 
+    *ptr = 0;
     return out;
 }

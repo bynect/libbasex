@@ -11,7 +11,7 @@
 
 
 char *
-base58_encode(const unsigned char *src, int len)
+base58_encode(const unsigned char *src, int len, int pad)
 {
     const char encoding_table[58] = "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz";
 
@@ -29,6 +29,7 @@ base58_encode(const unsigned char *src, int len)
 
     size = (len - zero) * 138 / 100;
     unsigned char buff[size + 1];
+    memset(buff, 0, size + 1);
 
     for (i = zero, high = size; i < len; ++i, high = j) {
         for (carry = *(src + i), j = size; (j > high) || carry; --j) {
@@ -81,10 +82,44 @@ base58_decode(const unsigned char *src, int len)
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
     };
 
+    unsigned char *out;
+    unsigned int size, buff = 1;
+    int i, j, carry;
+
     if (src == NULL)
         return NULL;
 
+    size = len * 138 / 100;
+    out = malloc((size + 1) * sizeof(unsigned char));
+    *out = 0;
 
-    /*TODO*/
-    return NULL;
+    for (i = 0; i < len; i++) {
+        carry = decoding_table[*src++];
+
+        if (carry == -1)
+            return NULL;
+
+        for (j = 0; j < buff; j++) {
+            carry += out[j] * 58;
+            *(out + j) = carry & 0xff;
+            carry >>= 8;
+        }
+
+        while (carry > 0) {
+            out[buff++] = carry & 0xff;
+            carry >>= 8;
+        }
+    }
+
+    while (len-- && *src++ == '1')
+        out[buff++] = 0;
+
+    for (i = buff - 1, j = (buff >> 1) + (buff & 1); i >= j; i--) {
+        int t = out[i];
+        out[i] = out[buff - i - 1];
+        out[buff - i - 1] = t;
+    }
+
+    out[buff] = 0;
+    return out;
 }

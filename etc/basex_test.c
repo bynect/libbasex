@@ -92,9 +92,12 @@ strcmp_print(const char *s1, const char *s2)
     free(dec6_ ## x);
 
 
+#define TESTNAME(x) base ## x ## _test
+
+
 #define TEST(x)                                                         \
     static void                                                         \
-    base ## x ## _test(void)                                            \
+    TESTNAME(x)(void)                                                   \
     {                                                                   \
         basex_test(x);                                                  \
         printf("Base" #x "test passed.\n");                             \
@@ -103,11 +106,18 @@ strcmp_print(const char *s1, const char *s2)
 
 TEST(16)
 
+
 TEST(32)
+
 
 TEST(32hex)
 
+
+TEST(58)
+
+
 TEST(64)
+
 
 TEST(64url)
 
@@ -115,13 +125,15 @@ TEST(64url)
 int
 main(int argc, char **argv)
 {
-    base16_test();
+    TESTNAME(16)();
 
-    base32_test();
-    base32hex_test();
+    TESTNAME(32)();
+    TESTNAME(32hex)();
 
-    base64_test();
-    base64url_test();
+    TESTNAME(58)();
+
+    TESTNAME(64)();
+    TESTNAME(64url)();
 
     return 0;
 }

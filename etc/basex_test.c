@@ -22,6 +22,18 @@ static char *src5 = "fooba";
 static char *src6 = "foobar";
 
 
+static int
+strcmp_print(const char *s1, const char *s2)
+{
+    int t = strcmp(s1, s2);
+
+    if (t)
+        printf("%s  !=  %s\n\n", s1, s2);
+
+    return t;
+}
+
+
 #define basex_test(x)                                                   \
     char *enc0_ ## x;                                                   \
     char *enc1_ ## x;                                                   \
@@ -55,13 +67,13 @@ static char *src6 = "foobar";
     dec5_ ## x = base ## x ## _decode(enc5_ ## x, strlen(enc5_ ## x));  \
     dec6_ ## x = base ## x ## _decode(enc6_ ## x, strlen(enc6_ ## x));  \
                                                                         \
-    assert(!strcmp(src0, dec0_ ## x));                                  \
-    assert(!strcmp(src1, dec1_ ## x));                                  \
-    assert(!strcmp(src2, dec2_ ## x));                                  \
-    assert(!strcmp(src3, dec3_ ## x));                                  \
-    assert(!strcmp(src4, dec4_ ## x));                                  \
-    assert(!strcmp(src5, dec5_ ## x));                                  \
-    assert(!strcmp(src6, dec6_ ## x));                                  \
+    assert(!strcmp_print(src0, dec0_ ## x));                            \
+    assert(!strcmp_print(src1, dec1_ ## x));                            \
+    assert(!strcmp_print(src2, dec2_ ## x));                            \
+    assert(!strcmp_print(src3, dec3_ ## x));                            \
+    assert(!strcmp_print(src4, dec4_ ## x));                            \
+    assert(!strcmp_print(src5, dec5_ ## x));                            \
+    assert(!strcmp_print(src6, dec6_ ## x));                            \
                                                                         \
     free(enc0_ ## x);                                                   \
     free(enc1_ ## x);                                                   \
@@ -80,44 +92,24 @@ static char *src6 = "foobar";
     free(dec6_ ## x);
 
 
-static void
-base16_test(void)
-{
-    basex_test(16);
-    printf("Base16 test passed.\n");
-}
+#define TEST(x)                                                         \
+    static void                                                         \
+    base ## x ## _test(void)                                            \
+    {                                                                   \
+        basex_test(x);                                                  \
+        printf("Base" #x "test passed.\n");                             \
+    }
 
 
-static void
-base32_test(void)
-{
-    basex_test(32);
-    printf("Base32 test passed.\n");
-}
+TEST(16)
 
+TEST(32)
 
-static void
-base32hex_test(void)
-{
-    basex_test(32hex);
-    printf("Base32hex test passed.\n");
-}
+TEST(32hex)
 
+TEST(64)
 
-static void
-base64_test(void)
-{
-    basex_test(64);
-    printf("Base64 test passed.\n");
-}
-
-
-static void
-base64url_test(void)
-{
-    basex_test(64url);
-    printf("Base64url test passed.\n");
-}
+TEST(64url)
 
 
 int

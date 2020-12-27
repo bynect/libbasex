@@ -16,13 +16,14 @@ base32_encode(const unsigned char *src, int len, int pad)
     const char encoding_table[32] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
 
     char *out, *ptr;
-    unsigned int bits, buff;
+    unsigned int bits, buff, size;
     int rem, i;
 
     if (src == NULL)
         return NULL;
 
-    out = malloc((((len * 8 + 4) / 5) + 7) * sizeof(char));
+    size = (len * 8 + 4) / 5 + 6;
+    out = malloc((size + 1) * sizeof(char));
     ptr = out;
 
     bits = 0;
@@ -30,7 +31,7 @@ base32_encode(const unsigned char *src, int len, int pad)
 
     for (i = 0; i < len; ++i) {
         buff <<= 8;
-        buff += (unsigned int)(*src++);
+        buff +=  (unsigned int)(*src++);
         bits += 8;
         while (bits >= 5) {
             *ptr++ = encoding_table[(buff >> (bits - 5)) & 0x3f];
@@ -78,7 +79,7 @@ base32_encode(const unsigned char *src, int len, int pad)
 
 
 unsigned char *
-base32_decode(const unsigned char *src, int len)
+base32_decode(const char *src, int len)
 {
     const char decoding_table[256] = {
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -100,13 +101,14 @@ base32_decode(const unsigned char *src, int len)
     };
 
     unsigned char *out, *ptr;
-    unsigned int bits, buff;
+    unsigned int bits, buff, size;
     int i;
 
     if (src == NULL)
         return NULL;
 
-    out = malloc(((len / 1.6) + 1) * sizeof(unsigned char));
+    size = len / 1.6;
+    out = malloc((size + 1) * sizeof(unsigned char));
     ptr = out;
 
     bits = 0;

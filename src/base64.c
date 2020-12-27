@@ -16,13 +16,14 @@ base64_encode(const unsigned char *src, int len, int pad)
     const char encoding_table[64] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
     char *out, *ptr;
-    unsigned int bits, buff;
+    unsigned int bits, buff, size;
     int rem, i;
 
     if (src == NULL)
         return NULL;
 
-    out = malloc(((pad ? ((len + 3 - 1) / 3) * 4 : (len * 4 + 3 - 1) / 3) + 1) * sizeof(char));
+    size = pad ? (((len + 3 - 1) / 3) * 4) : ((len * 4 + 3 - 1) / 3);
+    out = malloc((size + 1) * sizeof(char));
     ptr = out;
 
     bits = 0;
@@ -62,7 +63,7 @@ base64_encode(const unsigned char *src, int len, int pad)
 
 
 unsigned char *
-base64_decode(const unsigned char *src, int len)
+base64_decode(const char *src, int len)
 {
     const char decoding_table[256] = {
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -84,13 +85,14 @@ base64_decode(const unsigned char *src, int len)
     };
 
     unsigned char *out, *ptr;
-    unsigned int bits, buff;
+    unsigned int bits, buff, size;
     int i;
 
     if (src == NULL)
         return NULL;
 
-    out = malloc(((len / 4 * 3) + 1) * sizeof(unsigned char));
+    size = len / 4 * 3;
+    out = malloc((size + 1) * sizeof(unsigned char));
     ptr = out;
 
     bits = 0;

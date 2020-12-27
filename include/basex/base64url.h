@@ -19,7 +19,7 @@
 char *base64url_encode(const unsigned char *src, int len, int pad);
 
 
-unsigned char *base64url_decode(const unsigned char *src, int len);
+unsigned char *base64url_decode(const char *src, int len);
 
 
 #endif /*_BASE64URL_H*/

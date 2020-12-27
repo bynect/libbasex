@@ -19,7 +19,7 @@
 char *base32hex_encode(const unsigned char *src, int len, int pad);
 
 
-unsigned char *base32hex_decode(const unsigned char *src, int len);
+unsigned char *base32hex_decode(const char *src, int len);
 
 
 #endif /*_BASE32HEX_H*/

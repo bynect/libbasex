@@ -44,13 +44,12 @@ base58_encode(const unsigned char *src, int len, int pad)
     for (j = 0; j < (size + 1) && !buff[j]; ++j);
         
     out = malloc((zero + size - j + 1) * sizeof(char));
-    ptr = out;
+    ptr = out + zero;
 
     if (zero) {
         memset(out, '1', zero);
     }
 
-    ptr += zero;
     for (; j < size + 1; ++j) {
         *ptr++ = encoding_table[buff[j]];
     }
@@ -61,7 +60,7 @@ base58_encode(const unsigned char *src, int len, int pad)
 
 
 unsigned char *
-base58_decode(const unsigned char *src, int len)
+base58_decode(const char *src, int len)
 {
     const char decoding_table[256] = {
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -94,7 +93,8 @@ base58_decode(const unsigned char *src, int len)
     *out = 0;
 
     for (i = 0; i < len; i++) {
-        carry = decoding_table[*src++];
+        const unsigned char c = *src++;
+        carry = decoding_table[c];
 
         if (carry == -1)
             return NULL;

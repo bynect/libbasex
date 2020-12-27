@@ -16,12 +16,14 @@ base16_encode(const unsigned char *src, int len, int pad)
     const char encoding_table[16] = "0123456789ABCDEF";
 
     char *out, *ptr;
+    unsigned int size;
     int i;
 
     if (src == NULL)
         return NULL;
 
-    out = malloc(((len * 2) + 1) * sizeof(char));
+    size = len * 2;
+    out = malloc((size + 1) * sizeof(char));
     ptr = out;
 
     for (i = 0; i < len; ++i) {
@@ -36,7 +38,7 @@ base16_encode(const unsigned char *src, int len, int pad)
 
 
 unsigned char *
-base16_decode(const unsigned char *src, int len)
+base16_decode(const char *src, int len)
 {
     const char decoding_table[256] = {
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
@@ -58,17 +60,21 @@ base16_decode(const unsigned char *src, int len)
     };
 
     unsigned char *out, *ptr;
+    unsigned int size;
     int i;
 
     if (src == NULL)
         return NULL;
 
-    out = malloc(((len /= 2) + 1) * sizeof(unsigned char));
+    size = (len /= 2);
+    out = malloc((size + 1) * sizeof(unsigned char));
     ptr = out;
 
     for (i = 0; i < len; ++i) {
-        const unsigned char b1 = decoding_table[*src++];
-        const unsigned char b2 = decoding_table[*src++];
+        const unsigned char c1 = *src++, c2 = *src++;
+
+        const unsigned char b1 = decoding_table[c1];
+        const unsigned char b2 = decoding_table[c2];
 
         if (b1 == -1 || b2 == -1)
             return NULL;

@@ -15,6 +15,8 @@ extern "C" {
 #endif
 
 
+#include <basex/base2.h>
+
 #include <basex/base16.h>
 
 #include <basex/base32.h>

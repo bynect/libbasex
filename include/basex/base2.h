@@ -7,8 +7,8 @@
  */
 
 
-#ifndef _BASE58_H
-#define _BASE58_H
+#ifndef _BASE2_H
+#define _BASE2_H
 
 
 #include <stddef.h>
@@ -16,10 +16,10 @@
 #include <malloc.h>
 
 
-char *base58_encode(const unsigned char *src, int len, int pad);
+char *base2_encode(const unsigned char *src, int len, int pad);
 
 
-unsigned char *base58_decode(const char *src, int len);
+unsigned char *base2_decode(const char *src, int len);
 
 
-#endif /*_BASE58_H*/
+#endif /*_BASE2_H*/

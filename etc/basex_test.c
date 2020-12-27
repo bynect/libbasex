@@ -100,8 +100,11 @@ strcmp_print(const char *s1, const char *s2)
     TESTNAME(x)(void)                                                   \
     {                                                                   \
         basex_test(x);                                                  \
-        printf("Base" #x "test passed.\n");                             \
+        printf("Base" #x " test passed.\n");                            \
     }
+
+
+TEST(2)
 
 
 TEST(16)
@@ -125,6 +128,8 @@ TEST(64url)
 int
 main(int argc, char **argv)
 {
+    TESTNAME(2)();
+
     TESTNAME(16)();
 
     TESTNAME(32)();

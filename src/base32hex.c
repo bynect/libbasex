@@ -33,6 +33,7 @@ base32hex_encode(const unsigned char *src, int len, int pad)
         buff <<= 8;
         buff += (unsigned int)(*src++);
         bits += 8;
+
         while (bits >= 5) {
             *ptr++ = encoding_table[(buff >> (bits - 5)) & 0x3f];
             buff &= ~(0x1f << (bits - 5));
@@ -113,6 +114,7 @@ base32hex_decode(const char *src, int len)
 
     bits = 0;
     buff = 0;
+
     for (i = 0; i < len; ++i) {
         const unsigned char c = *src++;
         const int group = decoding_table[c];

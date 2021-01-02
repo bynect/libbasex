@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 @bynect
+ * Copyright 2020-2021 @bynect
  *
  * This is free and open source software.
  * You can use/modify/redistribute it under the terms of the MIT license.

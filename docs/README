@@ -8,7 +8,7 @@ The supported base encodings are:
     * base64
     * base64url
 
-Copyright 2020 @bynect
+Copyright 2020-2021 @bynect
 
 This library is licensed under the the MIT license.
 See docs/LICENSE for for more details.

@@ -35,5 +35,5 @@ ar rcs $static $objdir/*_static.o
 echo "$static compiled."
 
 #shared library
-$cc $cflags -shared -o $shared $objdir/*_dynamic.o
+$cc $cflags -shared -fpic -O3 -o $shared $objdir/*_dynamic.o
 echo "$shared compiled."

@@ -19,7 +19,6 @@ base58_encode(const unsigned char *src, int len, int pad)
     unsigned int size, high, zero = 0;
     int i, j, carry;
 
-
     if (src == NULL)
         return NULL;
 

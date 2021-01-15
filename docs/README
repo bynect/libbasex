@@ -1,6 +1,7 @@
 The `basex` library offers various base encoding and decoding functions.
 
 The supported base encodings are:
+    * base2
     * base16
     * base32
     * base32hex
